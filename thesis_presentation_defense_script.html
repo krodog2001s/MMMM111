@@ -1,0 +1,1213 @@
+<html lang="th"><head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>สคริปต์นำเสนอและคลังคำตอบสอบวิทยานิพนธ์ (Complete Defense Script &amp; Q&amp;A)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+  <link href="https://fonts.googleapis.com/css2?family=Prompt:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=Sarabun:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&amp;family=Fira+Code:wght@400;500;600&amp;display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #f8fafc;
+      --card-bg: #ffffff;
+      --navy-dark: #0b1528;
+      --navy-card: #13223f;
+      --primary: #1e3a8a;
+      --primary-light: #2563eb;
+      --cyan: #0284c7;
+      --cyan-light: #e0f2fe;
+      --green: #10b981;
+      --green-light: #ecfdf5;
+      --amber: #f59e0b;
+      --amber-light: #fffbeb;
+      --red: #ef4444;
+      --red-light: #fef2f2;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --text-muted: #64748b;
+      --font-base: 17.5px;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Sarabun', -apple-system, BlinkMacSystemFont, sans-serif;
+      background-color: var(--bg);
+      color: var(--text);
+      font-size: var(--font-base);
+      line-height: 1.85;
+      padding-bottom: 90px;
+    }
+
+    /* Sticky Header Bar */
+    .sticky-bar {
+      position: sticky;
+      top: 0;
+      z-index: 1000;
+      background: rgba(11, 21, 40, 0.95);
+      backdrop-filter: blur(12px);
+      color: #fff;
+      padding: 12px 24px;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+      box-shadow: 0 4px 20px rgba(0,0,0,0.18);
+    }
+    .sticky-title {
+      font-family: 'Prompt', sans-serif;
+      font-weight: 600;
+      font-size: 18px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .sticky-badge {
+      background: #0ea5e9;
+      color: #fff;
+      font-size: 12px;
+      padding: 2px 8px;
+      border-radius: 6px;
+      font-weight: 600;
+    }
+    .actions-group {
+      display: flex;
+      gap: 8px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+    .btn {
+      font-family: 'Prompt', sans-serif;
+      font-size: 14.5px;
+      font-weight: 500;
+      padding: 8px 16px;
+      border-radius: 8px;
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      text-decoration: none;
+    }
+    .btn-primary { background: #2563eb; color: #fff; }
+    .btn-primary:hover { background: #1d4ed8; }
+    .btn-success { background: #10b981; color: #fff; }
+    .btn-success:hover { background: #059669; }
+    .btn-outline { background: rgba(255,255,255,0.12); color: #fff; border-color: rgba(255,255,255,0.25); }
+    .btn-outline:hover { background: rgba(255,255,255,0.22); }
+    .font-ctrl {
+      background: rgba(255,255,255,0.12);
+      color: #fff;
+      border: 1px solid rgba(255,255,255,0.25);
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+    }
+    .font-ctrl:hover { background: rgba(255,255,255,0.25); }
+
+    /* Main Container */
+    .container {
+      max-width: 1140px;
+      margin: 24px auto;
+      padding: 0 20px;
+    }
+
+    /* Hero Info */
+    .hero {
+      background: linear-gradient(135deg, #0b1528 0%, #172a4d 50%, #1e3a8a 100%);
+      color: #fff;
+      padding: 36px 32px;
+      border-radius: 20px;
+      box-shadow: 0 12px 32px rgba(11,21,40,0.3);
+      margin-bottom: 24px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .hero-badge-top {
+      font-family: 'Prompt', sans-serif;
+      font-size: 13px;
+      text-transform: uppercase;
+      color: #38bdf8;
+      font-weight: 700;
+      margin-bottom: 8px;
+      letter-spacing: 0.5px;
+    }
+    .hero h1 {
+      font-family: 'Prompt', sans-serif;
+      font-size: 26px;
+      font-weight: 700;
+      margin-bottom: 12px;
+      line-height: 1.4;
+      color: #ffffff;
+    }
+    .hero p {
+      font-size: 16px;
+      color: #cbd5e1;
+      margin-bottom: 18px;
+      line-height: 1.7;
+    }
+    .hero-meta {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 12px;
+      background: rgba(255,255,255,0.08);
+      padding: 16px;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.12);
+      font-size: 14.5px;
+    }
+    .hero-meta strong { color: #38bdf8; }
+
+    /* Nav Tabs */
+    .tab-nav {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 24px;
+      overflow-x: auto;
+      padding-bottom: 6px;
+      border-bottom: 2px solid var(--border);
+    }
+    .tab-btn {
+      font-family: 'Prompt', sans-serif;
+      font-size: 15.5px;
+      font-weight: 600;
+      padding: 11px 20px;
+      border-radius: 12px 12px 0 0;
+      border: none;
+      background: transparent;
+      color: var(--text-muted);
+      cursor: pointer;
+      white-space: nowrap;
+      transition: all 0.2s;
+    }
+    .tab-btn:hover { color: var(--primary); background: #f1f5f9; }
+    .tab-btn.active {
+      color: var(--primary);
+      background: #fff;
+      border-bottom: 3px solid var(--primary);
+      box-shadow: 0 -3px 12px rgba(0,0,0,0.04);
+    }
+
+    /* Tab Content Section */
+    .tab-content { display: none; }
+    .tab-content.active { display: block; }
+
+    /* Cards */
+    .card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 24px 28px;
+      margin-bottom: 22px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.03);
+    }
+    .card-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+      margin-bottom: 14px;
+      border-bottom: 1px solid #f1f5f9;
+      padding-bottom: 12px;
+      gap: 12px;
+    }
+    .slide-badge {
+      font-family: 'Prompt', sans-serif;
+      background: #e0f2fe;
+      color: #0369a1;
+      font-size: 13.5px;
+      font-weight: 700;
+      padding: 4px 14px;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .time-badge {
+      font-family: 'Prompt', sans-serif;
+      background: #fef3c7;
+      color: #b45309;
+      font-size: 13px;
+      font-weight: 600;
+      padding: 4px 10px;
+      border-radius: 8px;
+    }
+    .card-title {
+      font-family: 'Prompt', sans-serif;
+      font-size: 21px;
+      font-weight: 700;
+      color: var(--navy-dark);
+      margin-top: 4px;
+    }
+
+    /* Speaking Box */
+    .speech-box {
+      background: #f0fdf4;
+      border-left: 5px solid #10b981;
+      padding: 20px 22px;
+      border-radius: 0 12px 12px 0;
+      margin-bottom: 16px;
+    }
+    .speech-box-label {
+      font-family: 'Prompt', sans-serif;
+      font-size: 14px;
+      font-weight: 700;
+      color: #047857;
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .speech-text {
+      font-size: 18px;
+      color: #064e3b;
+      line-height: 1.9;
+    }
+    .speech-text strong {
+      color: #022c22;
+      font-weight: 700;
+    }
+
+    /* Key Notes */
+    .notes-box {
+      background: #f8fafc;
+      border: 1px solid #e2e8f0;
+      border-radius: 10px;
+      padding: 14px 18px;
+      font-size: 15px;
+    }
+    .notes-box-label {
+      font-family: 'Prompt', sans-serif;
+      font-size: 13.5px;
+      font-weight: 700;
+      color: var(--text-muted);
+      margin-bottom: 6px;
+    }
+    .notes-list {
+      padding-left: 20px;
+      color: #334155;
+    }
+    .notes-list li { margin-bottom: 4px; }
+
+    /* Q&A Accordion Style */
+    .qa-card {
+      background: var(--card-bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      margin-bottom: 18px;
+      overflow: hidden;
+      box-shadow: 0 3px 10px rgba(0,0,0,0.02);
+    }
+    .qa-question {
+      background: #f8fafc;
+      padding: 18px 22px;
+      font-family: 'Prompt', sans-serif;
+      font-size: 18.5px;
+      font-weight: 700;
+      color: #1e3a8a;
+      border-bottom: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .q-num {
+      background: #1e3a8a;
+      color: #fff;
+      font-size: 13.5px;
+      padding: 3px 10px;
+      border-radius: 6px;
+      font-weight: 600;
+      flex-shrink: 0;
+    }
+    .qa-answer {
+      padding: 22px 24px;
+      font-size: 17.5px;
+      line-height: 1.9;
+      color: #1e293b;
+    }
+    .answer-highlight {
+      background: #eff6ff;
+      border-left: 4px solid #3b82f6;
+      padding: 12px 18px;
+      border-radius: 0 8px 8px 0;
+      margin: 12px 0;
+      font-weight: 500;
+      color: #1e40af;
+    }
+
+    /* Print Stylesheet */
+    @media print {
+      .sticky-bar, .tab-nav, .font-ctrl, .btn { display: none !important; }
+      body { background: #fff !important; color: #000 !important; font-size: 12pt !important; line-height: 1.6 !important; }
+      .container { max-width: 100% !important; margin: 0 !important; padding: 0 !important; }
+      .tab-content { display: block !important; }
+      .card, .qa-card { page-break-inside: avoid; border: 1px solid #ccc !important; box-shadow: none !important; margin-bottom: 16px !important; }
+      .hero { background: #fff !important; color: #000 !important; border: 2px solid #000 !important; }
+      .hero h1, .hero p, .hero strong { color: #000 !important; }
+      .speech-box { background: #f9f9f9 !important; border-left: 4px solid #000 !important; color: #000 !important; }
+      .speech-text { color: #000 !important; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Top Sticky Bar -->
+  <header class="sticky-bar">
+    <div class="sticky-title">
+      <span>🎙️ สคริปต์นำเสนอและคลังคำตอบสอบวิทยานิพนธ์</span>
+      <span class="sticky-badge">พร้อมซ้อมสอบ 20 ต.ค. 69</span>
+    </div>
+    <div class="actions-group">
+      <span style="font-size: 13.5px; color: #cbd5e1; margin-right: 4px;">ขนาดอักษร:</span>
+      <button class="font-ctrl" onclick="changeFontSize(-1)" title="ลดขนาดตัวอักษร">A-</button>
+      <button class="font-ctrl" onclick="changeFontSize(1)" title="เพิ่มขนาดตัวอักษร">A+</button>
+      <button class="btn btn-outline" onclick="window.print()">🖨️ พิมพ์ / เซฟ PDF</button>
+      <button class="btn btn-success" onclick="downloadHTML()">📥 ดาวน์โหลดไฟล์ HTML</button>
+    </div>
+  </header>
+
+  <div class="container">
+
+    <!-- Hero Header -->
+    <section class="hero">
+      <div class="hero-badge-top">Senior Project Presentation &amp; Defense Cheatsheet</div>
+      <h1>ระบบติดตามการใช้ห้องเรียนและวิเคราะห์การใช้งานเครื่องปรับอากาศด้วยเทคโนโลยี IoT</h1>
+      <p>สคริปต์คำพูดบรรยายแยกรายสไลด์ 1–23 (10 นาที) • สคริปต์สาธิตระบบจริง (5 นาที) • คลังคำตอบเจาะลึก 15 ข้อดักทางคณะกรรมการสอบ</p>
+      
+      <div class="hero-meta">
+        <div><strong>ผู้จัดทำ:</strong> นายณัฐพร แสงฉวี (66311742)<br>นายอุดมศักดิ์ ศิริประเสริฐ (66315863)</div>
+        <div><strong>อาจารย์ที่ปรึกษา:</strong> ผศ.ณัฐวดี หงษ์บุญมี</div>
+        <div><strong>สาขาวิชา:</strong> เทคโนโลยีสารสนเทศ ม.นเรศวร</div>
+        <div><strong>เวลาการสอบ:</strong> พรีเซนต์ 10 น. • สาธิต 5 น. • ตอบคำถาม 5–10 น.</div>
+      </div>
+    </section>
+
+    <!-- Navigation Tabs -->
+    <nav class="tab-nav">
+      <button class="tab-btn active" onclick="switchTab('tab-slides')">📊 สคริปต์พูด 23 สไลด์ (10 นาที)</button>
+      <button class="tab-btn" onclick="switchTab('tab-demo')">💻 สคริปต์สาธิตระบบ Demo (5 นาที)</button>
+      <button class="tab-btn" onclick="switchTab('tab-qa')">🛡️ คลังคำตอบดักทางกรรมการ (15 คำถามเจาะลึก)</button>
+      <button class="tab-btn" onclick="switchTab('tab-tech')">⚙️ สรุปเชิงเทคนิค &amp; โฟลว์การทำงานระบบ</button>
+    </nav>
+
+    <!-- ==========================================
+         TAB 1: SLIDE-BY-SLIDE SCRIPT (23 SLIDES)
+         ========================================== -->
+    <div id="tab-slides" class="tab-content active">
+
+      <!-- SLIDE 1 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 1</span><div class="card-title">หน้าปก (Title Slide)</div></div>
+          <span class="time-badge">⏱️ 0:00 - 0:25 (25 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "กราบเรียนท่านประธาน และคณะกรรมการสอบวิทยานิพนธ์ทุกท่านครับ กระผมนายณัฐพร แสงฉวี และนายอุดมศักดิ์ ศิริประเสริฐ นิสิตสาขาวิชาเทคโนโลยีสารสนเทศ คณะวิทยาศาสตร์ มหาวิทยาลัยนเรศวร โดยมีท่าน <strong>ผู้ช่วยศาสตราจารย์ ณัฐวดี หงษ์บุญมี</strong> เป็นอาจารย์ที่ปรึกษาครับ<br><br>
+            ในวันนี้พวกเราขออนุญาตนำเสนอโครงงานวิจัยเรื่อง <strong>'ระบบติดตามการใช้ห้องเรียนและวิเคราะห์การใช้งานเครื่องปรับอากาศด้วยเทคโนโลยี IoT'</strong> (IoT-Based Classroom Occupancy Monitoring and Air-Conditioning Usage Analytics) ครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 2 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 2</span><div class="card-title">ที่มาและความสำคัญของปัญหา (Problem Statement)</div></div>
+          <span class="time-badge">⏱️ 0:25 - 0:55 (30 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "ที่มาและความสำคัญของปัญหา เกิดจากการที่อาคารเรียนมักพบปัญหา <strong>'การเปิดเครื่องปรับอากาศและไฟทิ้งไว้ในห้องเรียนที่ไม่มีผู้ใช้งาน'</strong> หลังเลิกเรียนครับ ซึ่งส่งผลกระทบต่อการสูญเสียพลังงานของอาคารอย่างมาก<br><br>
+            ปัญหาสำคัญ 3 ประการคือ:<br>
+            <strong>1. ไม่ทราบเวลาใช้งานจริง:</strong> ขาดระบบบันทึกชั่วโมงการเปิด-ปิดจริง ทำให้ไม่รู้ว่าถูกเปิดทิ้งไว้กี่ชั่วโมงกี่นาที<br>
+            <strong>2. ข้อจำกัดการเดินตรวจ:</strong> แม่บ้านหรือ รปภ. ไม่สามารถเดินตรวจเช็กได้ตลอดเวลา ทำให้แอร์อาจเปิดทิ้งไว้นาน 1 ถึง 3 ชั่วโมงก่อนจะมีคนมาพบ<br>
+            <strong>3. IoT &amp; Automation:</strong> จึงเป็นที่มาของการนำเทคโนโลยี IoT มาตรวจจับสถานะเปิด-ปิดจริง และแจ้งเตือนผ่าน LINE อัตโนมัติครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 3 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 3</span><div class="card-title">วัตถุประสงค์ของงานวิจัย (Research Objectives)</div></div>
+          <span class="time-badge">⏱️ 0:55 - 1:20 (25 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "วัตถุประสงค์ของงานวิจัยกำหนดไว้ 3 ข้อหลัก สอดคล้องกันทั้งฮาร์ดแวร์ ซอฟต์แวร์ และการวิเคราะห์ผลครับ:<br>
+            <strong>1. ด้านฮาร์ดแวร์:</strong> เพื่อสร้างอุปกรณ์ IoT ตรวจจับคนและสถานะเปิด-ปิดเครื่องปรับอากาศด้วยบอร์ด ESP32 และเซนเซอร์จริง<br>
+            <strong>2. ด้านซอฟต์แวร์:</strong> เพื่อพัฒนาระบบรับส่งข้อมูลและแจ้งเตือนผ่าน Web Dashboard และ LINE Notify API แบบ Real-time<br>
+            <strong>3. ด้านการติดตาม:</strong> เพื่อบันทึกสถิติชั่วโมงการใช้งานเครื่องปรับอากาศสะสม (ชั่วโมง : นาที) สำหรับวิเคราะห์พฤติกรรมการใช้ห้องเรียนครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 4 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 4</span><div class="card-title">ขอบเขตของงานวิจัย (Research Scope)</div></div>
+          <span class="time-badge">⏱️ 1:20 - 1:50 (30 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "ขอบเขตงานวิจัยครอบคลุม 4 ด้านอย่างชัดเจนครับ:<br>
+            • <strong>ด้านข้อมูล:</strong> ตารางสอน, สภาพแวดล้อม (อุณหภูมิห้อง/ความชื้น/แสง), การเคลื่อนไหว, อุณหภูมิลมแอร์, ประวัติแจ้งเตือน และชั่วโมงใช้งานสะสม<br>
+            • <strong>ด้านเทคโนโลยี:</strong> ฮาร์ดแวร์ใช้ ESP32, DS18B20, PIR, DHT22, LDR ซอฟต์แวร์ใช้ PHP, MySQL, Chart.js และ LINE API<br>
+            • <strong>ด้านระบบ:</strong> ติดตั้งทดสอบจริง ณ ห้อง SC2-307 ส่งข้อมูลทุก 5 วินาที ใช้เกณฑ์ลมแอร์น้อยกว่าหรือเท่ากับ 26 องศาเซลเซียส พร้อม Debounce 5 นาที<br>
+            • <strong>ด้านผู้ใช้:</strong> Admin จัดการตารางสอนและระบบ และ Users ทั่วไปดูสถานะและรายงานย้อนหลังครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 5 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 5</span><div class="card-title">กรอบแนวคิดของงานวิจัย (Conceptual Framework)</div></div>
+          <span class="time-badge">⏱️ 1:50 - 2:20 (30 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "กรอบแนวคิดแบ่งเป็น Input, Process และ Output ชัดเจนครับ:<br>
+            • <strong>INPUT:</strong> ข้อมูลเซนเซอร์ DS18B20, PIR, DHT22, LDR และข้อมูลตารางสอน<br>
+            • <strong>PROCESS:</strong> ส่ง HTTP POST ขึ้นเซิร์ฟเวอร์, ตรวจเกณฑ์ลมแอร์ 26 องศา, เช็ค Debounce ย้อนหลัง 5 นาที, Match กับตารางสอน และคำนวณชั่วโมงสะสม<br>
+            • <strong>OUTPUT:</strong> แสดงผลบน Web Dashboard สถานะห้อง, แจ้งเตือน Warning และ Push Alert ผ่าน LINE พร้อมบันทึกชั่วโมงและนาทีสะสมครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 6 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 6</span><div class="card-title">การศึกษาและการเก็บรวบรวมข้อมูล (Data Collection &amp; Baseline)</div></div>
+          <span class="time-badge">⏱️ 2:20 - 2:45 (25 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "ในการศึกษาพื้นที่จริง ณ ห้องบรรยาย SC2-307 เราได้ทำการเก็บข้อมูลอุณหภูมิลมแอร์จริง พบว่าเมื่อเปิดแอร์ อุณหภูมิลมเย็นจะลดลงต่ำกว่า 26 องศาเซลเซียสอย่างรวดเร็ว จึงนำมาใช้เป็นเกณฑ์ตัดสินสถานะเปิดแอร์จริงครับ<br><br>
+            นอกจากนี้เราได้รวบรวมข้อมูลตารางสอน ได้แก่ วัน, เวลาเริ่ม-สิ้นสุด, ห้องเรียน, รายวิชา และผู้สอน เพื่อนำมาจับคู่เปรียบเทียบกับสถานะจริงในห้องเรียนแบบอัตโนมัติครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 7 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 7</span><div class="card-title">สถาปัตยกรรมระบบ 3 ชั้น (3-Tier System Architecture)</div></div>
+          <span class="time-badge">⏱️ 2:45 - 3:15 (30 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "สถาปัตยกรรมระบบได้รับการออกแบบเป็น 3 ชั้น (3-Tier Architecture) เพื่อให้ระบบทำงานเป็นอิสระและมีความเสถียรสูงครับ:<br>
+            <strong>1. Sensing Layer:</strong> บอร์ด ESP32 ต่อร่วมกับ DS18B20 วัดลมแอร์, PIR วัดคน, DHT22 วัดอุณหภูมิห้อง และ LDR วัดแสงสว่าง<br>
+            <strong>2. Network &amp; Server Layer:</strong> เชื่อมต่อผ่าน Wi-Fi ภายในอาคาร ส่งข้อมูลเข้า Apache Web Server ประมวลผลด้วย PHP และจัดเก็บลง MySQL Database<br>
+            <strong>3. Presentation Layer:</strong> แสดงผลผ่าน Responsive Web App ด้วย Bootstrap 5, กราฟ Chart.js และส่งแจ้งเตือนผ่าน LINE Messaging API ครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 8 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 8</span><div class="card-title">ผังลำดับการทำงานของระบบ (Workflow Diagram)</div></div>
+          <span class="time-badge">⏱️ 3:15 - 3:45 (30 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "ผังการทำงาน (Workflow) ทำงานวนลูปทุก ๆ 5 วินาทีครับ:<br>
+            • เมื่อ ESP32 อ่านค่าและส่งข้อมูลขึ้นมา ระบบจะเช็คอุณหภูมิลมแอร์เป็นอันดับแรก ถ้ามากกว่า 26 องศาเซลเซียส ตัดสินทันทีว่าเป็น <strong>'No use'</strong> (แอร์ปิด)<br>
+            • แต่ถ้าลมอุณหภูมิน้อยกว่าหรือเท่ากับ 26 องศาเซลเซียส แสดงว่าแอร์เปิดอยู่ ระบบจะไปตรวจว่า 'มีคนในห้องหรือไม่' หรือ 'มีวิชาเรียนตามตารางหรือไม่'<br>
+            • ถ้ามีคนหรือมีตารางเรียน จะเป็นสถานะ <strong>'In Use'</strong> แต่ถ้าไม่มีคนและไม่มีตารางเรียน ระบบจะเปลี่ยนเป็นสถานะ <strong>'Warning'</strong> พร้อมแจ้งเตือนทันทีครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 9 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 9</span><div class="card-title">ยูสเคสไดอะแกรม (Use Case Diagram)</div></div>
+          <span class="time-badge">⏱️ 3:45 - 4:05 (20 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "สไลด์ที่ 9 คือ Use Case Diagram แสดงการแบ่งบทบาทหน้าที่ของผู้ใช้งานออกเป็น 2 กลุ่มอย่างชัดเจนครับ:<br>
+            • <strong>Admin (ผู้ดูแลระบบ):</strong> มีสิทธิ์ Login, จัดการข้อมูลตารางสอน (เพิ่ม/อัปโหลดไฟล์), ตรวจเช็คสถานะอุปกรณ์ฮาร์ดแวร์ และจัดการผู้ใช้งาน<br>
+            • <strong>General Users (ผู้ใช้งานทั่วไป):</strong> สามารถดูสถานะห้องเรียน Real-time, ตรวจสอบอุณหภูมิ, ดูรายงานสถิติย้อนหลัง และสอบถามสถานะผ่าน LINE Chatbot ได้ครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 10 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 10</span><div class="card-title">สถาปัตยกรรมฐานข้อมูลและ ER-Diagram</div></div>
+          <span class="time-badge">⏱️ 4:05 - 4:30 (25 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "โครงสร้างฐานข้อมูล MySQL มี 5 ตารางหลักที่เชื่อมโยงกันด้วย Primary Key และ Foreign Key อย่างมีประสิทธิภาพครับ:<br>
+            • <code>rooms</code>: เก็บข้อมูลห้อง เช่น SC2-307<br>
+            • <code>schedule</code>: เก็บตารางเรียน วัน-เวลา และรายวิชา<br>
+            • <code>sensor_logs</code>: บันทึกข้อมูลเซนเซอร์ทุก 5 วินาที ใช้คำนวณชั่วโมงใช้งานสะสม<br>
+            • <code>notifications</code>: เก็บประวัติการเตือน Warning และสถานะการแก้ไข<br>
+            • <code>users</code>: จัดการบัญชีและระดับสิทธิ์การเข้าใช้งานระบบครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 11 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 11</span><div class="card-title">ซอร์สโค้ดสำคัญ 1 — ESP32 Firmware</div></div>
+          <span class="time-badge">⏱️ 4:30 - 4:55 (25 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "ในสไลด์ที่ 11 แสดงซอร์สโค้ดสำคัญฝั่งบอร์ด ESP32 ครับ:<br>
+            • บอร์ดจะอ่านค่าอุณหภูมิลมเย็นจาก DS18B20 และตรวจสอบเงื่อนไข <code>bool ac_status = acTemp &lt;= 26.0;</code> เพื่อตัดสินสถานะแอร์เปิด<br>
+            • จากนั้นอ่านค่าดิจิทัลจากเซนเซอร์ PIR แล้วแพ็กข้อมูลทั้งหมดในรูปแบบ x-www-form-urlencoded<br>
+            • แล้วส่งผ่านคำสั่ง <code>http.POST()</code> ไปยังไฟล์ insert_data.php บนเว็บเซิร์ฟเวอร์วนลูปทุก ๆ 5 วินาทีครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 12 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 12</span><div class="card-title">ซอร์สโค้ดสำคัญ 2 — PHP Backend &amp; Debounce Logic</div></div>
+          <span class="time-badge">⏱️ 4:55 - 5:25 (30 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "ในสไลด์ที่ 12 คือโค้ดส่วนสำคัญของระบบ Backend บน PHP ครับ:<br>
+            • <strong>กลไก Debounce 5 นาที:</strong> เราเขียนคำสั่ง SQL Query ย้อนหลัง 300 วินาทีว่า <code>SELECT MAX(motion_status) FROM sensor_logs WHERE created_at &gt;= ?</code> เพื่อเช็คว่าในช่วง 5 นาทีที่ผ่านมาเคยมีการเคลื่อนไหวหรือไม่ ป้องกัน False Alarm ในกรณีที่คนนั่งนิ่ง ๆ<br>
+            • หากแอร์เปิดอยู่แต่ไม่มีคนต่อเนื่องเกิน 5 นาที และไม่มีตารางเรียน ระบบจะสร้างบันทึก Warning และสั่งยิงแจ้งเตือนผ่านฟังก์ชัน <code>pushLineMessage()</code> ทันทีครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 13 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 13</span><div class="card-title">ผลการพัฒนาระบบ — หน้าจอ Login และ Dashboard</div></div>
+          <span class="time-badge">⏱️ 5:25 - 5:50 (25 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "ผลการพัฒนาระบบจริง สไลด์ที่ 13 แสดงหน้าจอระบบเริ่มจากหน้าเข้าสู่ระบบ (Login) ที่มีการเข้ารหัสผ่านอย่างปลอดภัย และหน้าจอหลัก Dashboard ครับ<br><br>
+            แดชบอร์ดออกแบบให้ดูง่ายในรูปแบบแถบแนวนอน แสดงชื่อห้อง SC2-307 อุณหภูมิห้อง ความชื้น สถานะไฟ และสถานะแอร์ อัปเดตข้อมูลแบบ Real-time ทุก 3-5 วินาทีโดยที่ผู้ใช้งานไม่ต้องกดรีเฟรชหน้าจอเลยครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 14 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 14</span><div class="card-title">การแจ้งเตือนความผิดปกติบนแดชบอร์ด (Warning State)</div></div>
+          <span class="time-badge">⏱️ 5:50 - 6:15 (25 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "สไลด์ที่ 14 แสดงหน้าจอเมื่อระบบตรวจพบความผิดปกติ (Warning) ครับ<br><br>
+            เมื่อพบว่าห้อง SC2-307 มีการเปิดแอร์ทิ้งไว้แต่ไม่มีคนใช้งาน การ์ดของห้องจะเปลี่ยนเป็นแถบสีส้ม-แดงกระพริบเตือนเด่นชัดบนหน้าจอทันที พร้อมทั้งบันทึกลงในรายการประวัติการแจ้งเตือน (Notifications Log) ซึ่งเจ้าหน้าที่สามารถเข้ามากดปุ่ม 'แก้ไขแล้ว' เพื่อบันทึกเวลาที่เข้าไปจัดการปัญหาได้ครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 15 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 15</span><div class="card-title">รายงานสรุปสถิติชั่วโมงการใช้งานเครื่องปรับอากาศ (Report Analytics)</div></div>
+          <span class="time-badge">⏱️ 6:15 - 6:45 (30 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "สไลด์ที่ 15 คือหน้ารายงานสรุปผล (report.html) ซึ่งมุ่งเน้นการวิเคราะห์ <strong>'ชั่วโมงการเปิดใช้งานจริงสะสม'</strong> ครับ:<br>
+            • มี Summary Card แสดง <strong>'เวลาใช้แอร์รวมวันนี้'</strong> และ <strong>'เวลาใช้ไฟรวม'</strong> ในหน่วยชั่วโมงและนาที<br>
+            • แสดง <strong>'ห้องที่เปิดแอร์นานที่สุด'</strong> เพื่อมองเห็นห้องที่มีการใช้งานหนาแน่น<br>
+            • แสดงกราฟแท่ง Chart.js เปรียบเทียบชั่วโมงใช้งานของแต่ละห้อง และมีปุ่มดาวน์โหลดรายงานสรุปออกมาเป็นไฟล์ Excel/CSV เพื่อส่งต่อให้ฝ่ายบริหารอาคารได้ทันทีครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 16 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 16</span><div class="card-title">การจัดการตารางสอนและสถานะอุปกรณ์ (Schedule &amp; Health Check)</div></div>
+          <span class="time-badge">⏱️ 6:45 - 7:10 (25 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "สไลด์ที่ 16 แสดงส่วนการจัดการตารางสอนสำหรับ Admin ครับ ซึ่งมี Smart Combobox ให้เลือก/พิมพ์ห้อง และรองรับการอัปโหลดไฟล์ตารางสอนแบบ Excel (.xlsx) เพื่อนำเข้าข้อมูลทีละทั้งสัปดาห์ได้อย่างรวดเร็ว<br><br>
+            นอกจากนี้ยังมีหน้า Device Health Check สำหรับตรวจสอบสถานะออนไลน์ของบอร์ด ESP32 เพื่อให้มั่นใจว่าอุปกรณ์ฮาร์ดแวร์ทำงานส่งข้อมูลได้อย่างต่อเนื่องครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 17 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 17</span><div class="card-title">การใช้งานผ่าน LINE Official Account</div></div>
+          <span class="time-badge">⏱️ 7:10 - 7:35 (25 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "สไลด์ที่ 17 คือการเชื่อมต่อกับ LINE Official Account ครับ โดยเราได้ออกแบบ Rich Menu 3 ปุ่มหลักที่เข้าถึงง่าย ได้แก่ ตรวจสอบสถานะห้อง, ดูอุณหภูมิ และขอความช่วยเหลือ<br><br>
+            เมื่อผู้ใช้งานพิมพ์ถาม Chatbot จะตอบสถานะห้องกลับมาทันที และที่สำคัญที่สุดคือระบบ Push Notification ที่จะยิงข้อความเตือนเข้ามือถือเจ้าหน้าที่ทันทีที่ตรวจพบแอร์เปิดทิ้งไว้ครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 18 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 18</span><div class="card-title">การติดตั้งและสภาพแวดล้อมการทดสอบจริง (Hardware Deployment)</div></div>
+          <span class="time-badge">⏱️ 7:35 - 8:00 (25 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "สไลด์ที่ 18 แสดงภาพการติดตั้งอุปกรณ์จริง ณ ห้อง SC2-307 อาคารคณิตศาสตร์ครับ:<br>
+            • กล่องเซนเซอร์หลักติดตั้งบนผนังห้องที่ความสูง 2.2 เมตร เพื่อให้เซนเซอร์ PIR ตรวจจับการเคลื่อนไหวได้ครอบคลุมพื้นที่โต๊ะเรียนทั้งหมด<br>
+            • สายโพรบ DS18B20 สแตนเลสกันน้ำ สอดเข้าไปบริเวณหน้ากากช่องลมแอร์โดยตรง ทำให้ตรวจจับลมเย็นได้อย่างแม่นยำ ปลอดภัย และไม่ต้องตัดต่อสายไฟแรงสูง 220V ของอาคารเลยครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 19 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 19</span><div class="card-title">ผลการทดสอบความแม่นยำของระบบ (Accuracy Test Results)</div></div>
+          <span class="time-badge">⏱️ 8:00 - 8:35 (35 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "ผลการทดสอบความแม่นยำจากการทดลองจริง 15 ครั้ง (สไลด์ 19) สรุปผลได้ดังนี้ครับ:<br>
+            • <strong>ภาพรวมระบบมีความแม่นยำเฉลี่ยสูงถึง 86.67%</strong> (ถูกต้อง 13 จาก 15 ครั้ง)<br>
+            • <strong>สถานะ No use (ห้องว่าง/แอร์ปิด):</strong> ถูกต้อง 5 จาก 5 ครั้ง คิดเป็น <strong>100%</strong><br>
+            • <strong>สถานะ In Use (ใช้งานปกติ):</strong> ถูกต้อง 4 จาก 5 ครั้ง คิดเป็น <strong>80.00%</strong><br>
+            • <strong>สถานะ Warning (เปิดแอร์ทิ้งไว้):</strong> ถูกต้อง 4 จาก 5 ครั้ง คิดเป็น <strong>80.00%</strong><br>
+            ข้อผิดพลาดที่พบ เกิดจากข้อจำกัดของ PIR ที่ตรวจไม่พบนิสิตที่นั่งนิ่ง ๆ ฟังบรรยายเกิน 5 นาทีครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 20 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 20</span><div class="card-title">สรุปผลการพัฒนาระบบ (Research Conclusion)</div></div>
+          <span class="time-badge">⏱️ 8:35 - 9:00 (25 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "สรุปผลการพัฒนาระบบ บรรลุตามวัตถุประสงค์ทั้ง 3 ด้านอย่างสมบูรณ์ครับ:<br>
+            <strong>1. อุปกรณ์ IoT:</strong> บอร์ด ESP32 และเซนเซอร์สามารถตรวจวัดและส่งข้อมูลแบบ Real-time ทุก 5 วินาทีได้อย่างเสถียร<br>
+            <strong>2. ซอฟต์แวร์และ LINE:</strong> หน้าจอ Dashboard อัปเดตทันที และระบบแจ้งเตือนผ่าน LINE แจ้งเตือนแอร์เปิดทิ้งไว้ได้อย่างแม่นยำ<br>
+            <strong>3. การวิเคราะห์:</strong> ระบบบันทึกชั่วโมงการใช้งานจริงสะสม ช่วยให้ฝ่ายบริหารอาคารทราบพฤติกรรมการใช้งานห้องและช่วยลดการเปิดแอร์ทิ้งไว้ได้อย่างแท้จริงครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 21 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 21</span><div class="card-title">ข้อจำกัดและแนวทางการพัฒนาต่อยอด (Limitations &amp; Future Work)</div></div>
+          <span class="time-badge">⏱️ 9:00 - 9:25 (25 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "สำหรับข้อจำกัดและแนวทางการพัฒนาต่อยอดในอนาคต (สไลด์ 21):<br>
+            • <strong>เซนเซอร์ตรวจจับคน:</strong> ข้อจำกัดของ PIR ที่พลาดเวลานั่งนิ่ง สามารถต่อยอดเป็น <strong>mmWave Radar Sensor</strong> เพื่อตรวจจับการมีอยู่ของมนุษย์จากอัตราการหายใจได้แม้จะอยู่นิ่ง<br>
+            • <strong>การควบคุมอัตโนมัติ:</strong> ติดตั้งชุดส่งสัญญาณอินฟราเรด (IR Transmitter) เพื่อสั่งปิดแอร์อัตโนมัติเมื่อพบการเปิดทิ้งไว้เกินเวลาที่กำหนด<br>
+            • และขยายการติดตั้งให้ครอบคลุมทุกห้องเรียนในอาคารครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 22 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 22</span><div class="card-title">แผนการสาธิตการทำงานของระบบ (System Demonstration Plan)</div></div>
+          <span class="time-badge">⏱️ 9:25 - 9:45 (20 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "ในสไลด์ที่ 22 คือแผนการสาธิตระบบจริงความยาว 5 นาทีครับ ซึ่งเราได้เตรียมการสาธิตแบ่งออกเป็น 4 ส่วน ได้แก่ การทำงานของอุปกรณ์ฮาร์ดแวร์, การแสดงผลบน Dashboard Real-time, การจำลองสถานะ Warning พร้อมแจ้งเตือนเข้า LINE สด ๆ และการเปิดหน้ารายงานสรุปชั่วโมงใช้งานสะสมครับ"
+          </div>
+        </div>
+      </article>
+
+      <!-- SLIDE 23 -->
+      <article class="card">
+        <div class="card-header">
+          <div><span class="slide-badge">สไลด์ที่ 23</span><div class="card-title">หน้าจบและการตอบข้อซักถาม (Q&amp;A Session)</div></div>
+          <span class="time-badge">⏱️ 9:45 - 10:00 (15 วินาที)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ คำพูดบรรยายที่ต้องพูด:</div>
+          <div class="speech-text">
+            "กลุ่มของกระผมขอจบการนำเสนอสไลด์แต่เพียงเท่านี้ ขอขอบพระคุณท่านคณะกรรมการทุกท่าน และพวกเราพร้อมเข้าสู่ขั้นตอนการสาธิตระบบจริง และพร้อมรับฟังคำถามและข้อเสนอแนะจากท่านคณะกรรมการครับ ขอบพระคุณครับ"
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- ==========================================
+         TAB 2: DEMO APPLICATION SCRIPT (5 MINS)
+         ========================================== -->
+    <div id="tab-demo" class="tab-content">
+      
+      <div class="card" style="border-left: 5px solid #2563eb;">
+        <div class="card-title" style="margin-bottom: 8px;">📋 กำหนดการและแผนผังการสาธิตระบบ (5 นาทีเต็ม)</div>
+        <p style="color: var(--text-muted);">แบ่งขั้นตอนอย่างเป็นมืออาชีพ มีผู้บรรยาย 1 คน และผู้ควบคุมอุปกรณ์/หน้าจอ 1 คน</p>
+      </div>
+
+      <!-- Demo Step 1 -->
+      <article class="card">
+        <div class="card-header">
+          <div>
+            <span class="slide-badge" style="background:#dbeafe; color:#1d4ed8;">ขั้นตอนที่ 1 (นาทีที่ 0:00 - 1:00)</span>
+            <div class="card-title">สาธิตฮาร์ดแวร์จริงและการรับส่งข้อมูล (Hardware Demonstration)</div>
+          </div>
+          <span class="time-badge">⏱️ 1 นาที</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ สคริปต์ผู้บรรยายพูดขณะสาธิต:</div>
+          <div class="speech-text">
+            "ขออนุญาตสาธิตการทำงานจริงของระบบครับ เริ่มต้นจากอุปกรณ์ฮาร์ดแวร์ IoT ชุดนี้ที่ประกอบขึ้นจริง โดยมีไมโครคอนโทรลเลอร์ ESP32 เชื่อมต่อกับ Wi-Fi ของอาคารเรียนครับ<br><br>
+            เซนเซอร์ที่เห็นอยู่นี้คือหัววัด DS18B20 สแตนเลสกันน้ำ ซึ่งในห้องเรียนจริงจะสอดไว้ในช่องลมแอร์, เซนเซอร์ PIR ตรวจจับคน, DHT22 วัดอุณหภูมิห้อง และ LDR วัดระดับแสงสว่างครับ โดยบอร์ดจะอ่านค่าและส่งข้อมูลผ่าน HTTP POST ทุก ๆ 5 วินาที ไปยังเซิร์ฟเวอร์ครับ"
+          </div>
+        </div>
+        <div class="notes-box">
+          <div class="notes-box-label">👉 หน้าที่ของเพื่อนผู้ควบคุมอุปกรณ์:</div>
+          <ul class="notes-list">
+            <li>ยกกล่องฮาร์ดแวร์ขึ้นให้กรรมการเห็นชัด ๆ ชี้ที่หัววัด DS18B20 และเซนเซอร์ PIR</li>
+            <li>เปิดจอ Serial Monitor บนคอมพิวเตอร์ให้เห็นว่า ESP32 กำลังยิง HTTP POST ขึ้นเซิร์ฟเวอร์จริงทุก 5 วินาที</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Demo Step 2 -->
+      <article class="card">
+        <div class="card-header">
+          <div>
+            <span class="slide-badge" style="background:#dbeafe; color:#1d4ed8;">ขั้นตอนที่ 2 (นาทีที่ 1:00 - 2:30)</span>
+            <div class="card-title">สาธิตหน้าจอ Dashboard Real-time และการจำลองสถานะ In Use</div>
+          </div>
+          <span class="time-badge">⏱️ 1.30 นาที</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ สคริปต์ผู้บรรยายพูดขณะสาธิต:</div>
+          <div class="speech-text">
+            "ที่หน้าจอ Dashboard ของเว็บแอปพลิเคชัน จะเห็นแถบสถานะของห้อง SC2-307 แสดงผลแบบ Real-time ครับ อุณหภูมิห้องอยู่ที่ 28 องศาเซลเซียส สถานะปัจจุบันเป็น No use (ห้องว่าง/แอร์ปิด)<br><br>
+            ตอนนี้เราจะจำลองการเปิดแอร์ โดยนำหัววัด DS18B20 ไปสัมผัสความเย็น (หรือใช้น้ำเย็น) เมื่ออุณหภูมิลมแอร์ลดลงต่ำกว่า 26 องศาเซลเซียส และเซนเซอร์ PIR ตรวจพบการเคลื่อนไหวของคน จะเห็นว่าหน้า Dashboard เปลี่ยนสถานะเป็น <strong>'In Use'</strong> สีเขียวทันทีโดยไม่ต้องกดรีเฟรชหน้าจอเลยครับ"
+          </div>
+        </div>
+        <div class="notes-box">
+          <div class="notes-box-label">👉 หน้าที่ของเพื่อนผู้ควบคุมอุปกรณ์:</div>
+          <ul class="notes-list">
+            <li>เปิดหน้าเว็บ Dashboard บนจอโปรเจกเตอร์</li>
+            <li>นำหัววัด DS18B20 สัมผัสความเย็น พร้อมโบกมือหน้าเซนเซอร์ PIR</li>
+            <li>ชี้ให้กรรมการดูว่าหน้าจอเปลี่ยนเป็น 'In Use' อัตโนมัติ</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Demo Step 3 -->
+      <article class="card">
+        <div class="card-header">
+          <div>
+            <span class="slide-badge" style="background:#fee2e2; color:#b91c1c;">ขั้นตอนที่ 3 (นาทีที่ 2:30 - 4:00)</span>
+            <div class="card-title">สาธิตจำลองสถานการณ์ Warning (เปิดแอร์ทิ้งไว้) และการแจ้งเตือนผ่าน LINE</div>
+          </div>
+          <span class="time-badge">⏱️ 1.30 นาที (ไฮไลต์สำคัญ!)</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ สคริปต์ผู้บรรยายพูดขณะสาธิต:</div>
+          <div class="speech-text">
+            "ถัดมาเป็นสถานการณ์สำคัญที่สุดของงานวิจัยนี้ครับ คือ <strong>'การเปิดแอร์ทิ้งไว้ในห้องว่าง (Warning)'</strong><br><br>
+            เราจำลองโดยให้แอร์ยังคงเปิดอยู่ (ลมเย็นต่ำกว่า 26 องศาเซลเซียส) แต่ไม่มีคนอยู่ในห้องและไม่มีตารางสอน เมื่อระบบผ่านกลไกตรวจเช็ค จะสังเกตเห็นว่าการ์ดของห้อง SC2-307 บน Dashboard เปลี่ยนเป็นแถบสีส้ม-แดงกระพริบเตือนทันทีครับ<br><br>
+            และในเวลาเดียวกัน ระบบได้ส่ง Push Notification เข้าไปยังสมาร์ตโฟนผ่าน LINE Official Account ระบุข้อความว่า 'แจ้งเตือน: ห้อง SC2-307 พบการเปิดแอร์ทิ้งไว้โดยไม่มีผู้ใช้งาน' เพื่อให้ผู้ดูแลสามารถเข้ามากดตรวจสอบและบันทึกการแก้ไขปัญหาได้ทันทีครับ"
+          </div>
+        </div>
+        <div class="notes-box">
+          <div class="notes-box-label">👉 หน้าที่ของเพื่อนผู้ควบคุมอุปกรณ์:</div>
+          <ul class="notes-list">
+            <li>ปิดเซนเซอร์ PIR ไม่ให้ตรวจจับคน</li>
+            <li>ชี้แถบ Warning สีแดงบนหน้าจอ Dashboard</li>
+            <li>หยิบสมาร์ตโฟนขึ้นมาโชว์ข้อความแจ้งเตือนที่เด้งเข้ามาในแอป LINE ให้กรรมการเห็นสด ๆ</li>
+          </ul>
+        </div>
+      </article>
+
+      <!-- Demo Step 4 -->
+      <article class="card">
+        <div class="card-header">
+          <div>
+            <span class="slide-badge" style="background:#dbeafe; color:#1d4ed8;">ขั้นตอนที่ 4 (นาทีที่ 4:00 - 5:00)</span>
+            <div class="card-title">สาธิตหน้ารายงานสรุปชั่วโมงสะสม และการจัดการตารางสอน</div>
+          </div>
+          <span class="time-badge">⏱️ 1 นาที</span>
+        </div>
+        <div class="speech-box">
+          <div class="speech-box-label">🗣️ สคริปต์ผู้บรรยายพูดขณะสาธิต:</div>
+          <div class="speech-text">
+            "สุดท้ายคือหน้ารายงานสถิติ (report.html) ครับ ระบบจะนำข้อมูลเวลาเปิดแอร์ทั้งหมดมาคำนวณเป็น 'เวลาใช้แอร์รวม (ชั่วโมงและนาที)' และแสดงกราฟแท่ง Chart.js เปรียบเทียบชั่วโมงการใช้งานของแต่ละห้อง พร้อมปุ่ม Export ข้อมูลออกมาเป็นไฟล์ Excel ได้ทันทีครับ<br><br>
+            และในส่วนของ Admin ยังสามารถอัปโหลดไฟล์ตารางสอน เพื่อนำมา Match กับการใช้งานห้องได้แบบอัตโนมัติครับ การสาธิตระบบเสร็จสมบูรณ์เรียบร้อยครับ"
+          </div>
+        </div>
+      </article>
+
+    </div>
+
+    <!-- ==========================================
+         TAB 3: Q&A DEFENSE BANK (15 QUESTIONS)
+         ========================================== -->
+    <div id="tab-qa" class="tab-content">
+
+      <div class="card" style="border-left: 5px solid #10b981;">
+        <div class="card-title" style="margin-bottom: 8px;">🛡️ คลังคำตอบดักทางกรรมการสอบ (Q&amp;A Defense Bank)</div>
+        <p style="color: var(--text-muted);">รวม 15 คำถามเจาะลึกที่คณะกรรมการสอบวิทยานิพนธ์สายไอที/วิศวกรรมมักถาม พร้อมคำตอบเชิงวิชาการที่ได้คะแนนเต็ม</p>
+      </div>
+
+      <!-- Q1 -->
+      <div class="qa-card">
+        <div class="qa-question"><span class="q-num">Q1</span> ทำไมระบบถึงวัดเป็น "ชั่วโมงและนาที" ไม่คำนวณเป็นหน่วยไฟฟ้า (kWh) หรือค่าไฟ (บาท)?</div>
+        <div class="qa-answer">
+          <div class="answer-highlight">
+            <strong>แนวทางการตอบ:</strong> ย้ำเรื่องความปลอดภัย, ความแม่นยำทางวิศวกรรม และการไม่ใช้วิธีเดาสุ่มตัวเลข
+          </div>
+          "กราบเรียนท่านคณะกรรมการครับ ในช่วงเริ่มต้นการออกแบบโครงงาน ทางกลุ่มเคยตั้งแนวคิดว่าจะประมาณการเป็นค่า kWh และเงินบาทครับ แต่เมื่อลงมือศึกษาและติดตั้งอุปกรณ์ในอาคารเรียนจริง เราพบประเด็นสำคัญ 2 ประการ:<br>
+          1. <strong>ความปลอดภัยของอาคาร:</strong> การวัด kWh ที่ถูกต้องตามหลักวิศวกรรมไฟฟ้า ต้องติดตั้งหม้อแปลงวัดกระแส (CT Sensor) เข้ากับสายไฟเมนแรงดันสูง 220V ของเครื่องปรับอากาศ ซึ่งมีความเสี่ยงไฟฟ้าลัดวงจรและผิดระเบียบของอาคารสถานที่<br>
+          2. <strong>ความถูกต้องทางวิทยาศาสตร์:</strong> เครื่องปรับอากาศในปัจจุบันเป็นระบบ Inverter ซึ่งกินกระแสไฟไม่คงที่ตลอดเวลา การนำจำนวนชั่วโมงไปคูณกับตัวเลขสเปกวัตต์เฉย ๆ จะได้ค่าที่คลาดเคลื่อนและไม่ใช่ค่าไฟจริง<br><br>
+          ทางกลุ่มจึงเลือกใช้วิธี <strong>Non-invasive</strong> ที่ปลอดภัย โดยใช้เซนเซอร์วัดอุณหภูมิลมเย็น เพื่อตรวจสอบสถานะเปิด-ปิดจริง และบันทึกเวลาเป็น <strong>'ชั่วโมงและนาทีการทำงานจริง (Operating Hours)'</strong> ตามวัตถุประสงค์ข้อ 3 ซึ่งแม่นยำ ปลอดภัย และตอบโจทย์การลดการเปิดแอร์ทิ้งไว้ได้อย่างแท้จริงครับ"
+        </div>
+      </div>
+
+      <!-- Q2 -->
+      <div class="qa-card">
+        <div class="qa-question"><span class="q-num">Q2</span> ทำไมถึงเลือกเกณฑ์อุณหภูมิ 26 องศาเซลเซียส (Threshold)? ทำไมไม่ใช้ 24 หรือ 25?</div>
+        <div class="qa-answer">
+          <div class="answer-highlight">
+            <strong>แนวทางการตอบ:</strong> อ้างอิงจากผลการทดลองหน้างานจริง (Empirical Data) ที่ห้อง SC2-307
+          </div>
+          "เกณฑ์ 26 องศาเซลเซียส ได้มาจากการเก็บข้อมูลจริงที่ห้อง SC2-307 ครับ โดยพบว่า:<br>
+          • ในสภาวะที่ <strong>ปิดแอร์:</strong> อุณหภูมิอากาศบริเวณช่องลมแอร์จะเท่ากับอุณหภูมิห้อง ซึ่งเฉลี่ยอยู่ที่ 28 - 32 องศาเซลเซียส<br>
+          • เมื่อ <strong>เปิดแอร์:</strong> คอยล์เย็นจะปล่อยลมออกมาที่อุณหภูมิประมาณ 18 - 24 องศาเซลเซียสอย่างรวดเร็วภายใน 1-2 นาที<br><br>
+          ดังนั้น ค่า <strong>26.0 องศาเซลเซียส</strong> จึงเป็นจุดตัด (Threshold) ที่มีความเสถียรสูงสุด ไม่ตัดเร็วเกินไปขณะแอร์เริ่มเดินเครื่อง และไม่ได้รับผลกระทบจากอุณหภูมิภายนอกห้องครับ"
+        </div>
+      </div>
+
+      <!-- Q3 -->
+      <div class="qa-card">
+        <div class="qa-question"><span class="q-num">Q3</span> เซนเซอร์ PIR มีจุดอ่อนคือจับคนอยู่นิ่งไม่ได้ แล้วทำไมไม่ใช้กล้อง AI หรือเซนเซอร์อื่น?</div>
+        <div class="qa-answer">
+          <div class="answer-highlight">
+            <strong>แนวทางการตอบ:</strong> อธิบายเรื่อง Privacy (ความเป็นส่วนตัว), ต้นทุน, พลังงาน และการแก้ปัญหาด้วย Debounce
+          </div>
+          "เหตุผลที่ไม่ใช้กล้อง AI ตรวจจับคนมี 3 ข้อหลักครับ:<br>
+          1. <strong>สิทธิส่วนบุคคล (PDPA &amp; Privacy):</strong> การติดกล้องในห้องเรียนอาจกระทบสิทธิของอาจารย์และนิสิต แต่เซนเซอร์ PIR ตรวจจับเพียงรังสีความร้อน ไม่มีการบันทึกภาพใด ๆ<br>
+          2. <strong>ต้นทุนและพลังงาน:</strong> PIR ราคาประหยัดและกินไฟต่ำมาก สามารถทำงานได้ 24 ชั่วโมงโดยไม่ต้องใช้การ์ดจอประมวลผลสูง<br>
+          3. <strong>การแก้จุดอ่อน:</strong> ทางกลุ่มได้แก้ปัญหาคนนั่งนิ่ง ๆ ด้วยการเขียนกลไก <strong>Debounce หน่วงเวลา 5 นาที</strong> บนฐานข้อมูล เพื่อเช็คว่าถ้าไม่มีการขยับตัวต่อเนื่องเกิน 5 นาทีจริง ๆ ถึงจะเริ่มนับเป็นห้องว่างครับ และในอนาคตสามารถต่อยอดเป็น mmWave Radar ได้ครับ"
+        </div>
+      </div>
+
+      <!-- Q4 -->
+      <div class="qa-card">
+        <div class="qa-question"><span class="q-num">Q4</span> กลไก Debounce 5 นาทีทำงานอย่างไรในโค้ด?</div>
+        <div class="qa-answer">
+          <div class="answer-highlight">
+            <strong>แนวทางการตอบ:</strong> อธิบายคำสั่ง SQL ในหน้า `insert_data.php` หรือ Backend PHP
+          </div>
+          "กลไก Debounce ทำงานที่ฝั่งเซิร์ฟเวอร์ PHP ครับ โดยเมื่อมีข้อมูลใหม่ส่งเข้ามา แทนที่ระบบจะดูแค่ค่า PIR ของวินาทีนั้น ระบบจะสั่งคิวรี่ SQL ย้อนหลัง 300 วินาที (5 นาที):<br>
+          <code>SELECT MAX(motion_status) FROM sensor_logs WHERE room_id = ? AND created_at &gt;= NOW() - INTERVAL 5 MINUTE</code><br>
+          หากค่า MAX เป็น 1 แสดงว่าในช่วง 5 นาทีที่ผ่านมาเคยมีการเคลื่อนไหว ระบบจะยังถือว่ามีคนอยู่ในห้อง เพื่อป้องกัน False Alarm ครับ"
+        </div>
+      </div>
+
+      <!-- Q5 -->
+      <div class="qa-card">
+        <div class="qa-question"><span class="q-num">Q5</span> ทำไมบอร์ด ESP32 ถึงส่งข้อมูลด้วย HTTP POST ทำไมไม่ใช้ MQTT Protocol?</div>
+        <div class="qa-answer">
+          <div class="answer-highlight">
+            <strong>แนวทางการตอบ:</strong> อธิบายเรื่อง Architecture ความเรียบง่าย และการเชื่อมต่อกับ Apache/PHP โดยตรง
+          </div>
+          "เนื่องจากสถาปัตยกรรมระบบของเราใช้ Apache Web Server และ PHP ซึ่งทำงานกับ HTTP เป็นมาตรฐานอยู่แล้วครับ การใช้ HTTP POST ช่วยให้:<br>
+          1. บอร์ด ESP32 สามารถยิงข้อมูลเข้าสู่สคริปต์ <code>insert_data.php</code> เพื่อตรวจสอบความถูกต้องและบันทึกลง MySQL ได้ทันทีในคำสั่งเดียว<br>
+          2. ลดความซับซ้อน ไม่ต้องติดตั้งและดูแล MQTT Broker เพิ่มเติมในฝั่งเซิร์ฟเวอร์<br>
+          3. ความถี่การส่งข้อมูลอยู่ที่ทุก ๆ 5 วินาที ซึ่งโปรโตคอล HTTP สามารถรองรับได้อย่างเสถียรโดยไม่เกิดปัญหาคอขวดครับ"
+        </div>
+      </div>
+
+      <!-- Q6 -->
+      <div class="qa-card">
+        <div class="qa-question"><span class="q-num">Q6</span> การคำนวณชั่วโมงและนาทีสะสมในหน้ารายงาน (report.html) คำนวณอย่างไร?</div>
+        <div class="qa-answer">
+          <div class="answer-highlight">
+            <strong>แนวทางการตอบ:</strong> อธิบาย Logic ของ `energy_api.php`
+          </div>
+          "ในหน้า Backend <code>energy_api.php</code> จะดึงข้อมูลจากตาราง <code>sensor_logs</code> โดยนับจำนวนแถวของข้อมูลที่มีสถานะแอร์เปิด (<code>ac_status = 1</code>) ในช่วงวันที่ต้องการ<br>
+          เนื่องจาก ESP32 ส่งข้อมูลทุก 5 วินาที เราจึงนำจำนวนแถวมาคำนวณเวลาสะสมเป็นวินาที แล้วแปลงเป็น 'ชั่วโมง' และ 'นาที' เพื่อส่งกลับเป็น JSON ไปแสดงผลบน Summary Card และพล็อตกราฟแท่ง Chart.js ครับ"
+        </div>
+      </div>
+
+      <!-- Q7 -->
+      <div class="qa-card">
+        <div class="qa-question"><span class="q-num">Q7</span> ระบบจับคู่ตารางสอน (Schedule Matching) มีตรรกะการตรวจสอบอย่างไร?</div>
+        <div class="qa-answer">
+          <div class="answer-highlight">
+            <strong>แนวทางการตอบ:</strong> เปรียบเทียบวันและเวลาปัจจุบัน (Current Timestamp) กับตาราง `schedule`
+          </div>
+          "เมื่อเซิร์ฟเวอร์ได้รับข้อมูลจากห้อง SC2-307 ระบบจะดึงวันในสัปดาห์ (เช่น วันจันทร์) และเวลาปัจจุบัน (เช่น 10:15 น.) ไปเทียบกับตาราง <code>schedule</code>:<br>
+          • ถ้าเวลาปัจจุบันอยู่ในช่วง <code>start_time</code> ถึง <code>end_time</code> ของวิชาที่ลงทะเบียนไว้ ระบบจะรับรู้ว่าช่วงเวลานี้ 'มีวิชาเรียนตามตาราง'<br>
+          • ซึ่งช่วยให้ระบบไม่แจ้งเตือนผิดพลาดในกรณีที่อาจารย์กำลังบรรยายหน้าชั้นเรียนแต่นิสิตนั่งฟังนิ่ง ๆ ครับ"
+        </div>
+      </div>
+
+      <!-- Q8 -->
+      <div class="qa-card">
+        <div class="qa-question"><span class="q-num">Q8</span> ผลการทดสอบ 15 ครั้ง ทำไมถึงได้ความแม่นยำ 86.67%? ข้อผิดพลาด 2 ครั้งเกิดจากอะไร?</div>
+        <div class="qa-answer">
+          <div class="answer-highlight">
+            <strong>แนวทางการตอบ:</strong> ตอบอย่างซื่อสัตย์ตามบทที่ 4 (หน้า 94-95)
+          </div>
+          "จากการทดสอบตามสถานการณ์จำลอง 15 ครั้ง ถูกต้อง 13 ครั้ง คิดเป็น 86.67% โดยแยกเป็น:<br>
+          • กรณีห้องว่าง (No use): ถูกต้อง 100% (5/5 ครั้ง)<br>
+          • กรณีใช้งานปกติ (In Use): ถูกต้อง 80% (4/5 ครั้ง) มี 1 ครั้งที่นิสิตนั่งนิ่งเกิน 5 นาที ทำให้เซนเซอร์ PIR ไม่จับสัญญาณ<br>
+          • กรณีเปิดแอร์ทิ้งไว้ (Warning): ถูกต้อง 80% (4/5 ครั้ง) มี 1 ครั้งที่เซนเซอร์ PIR ได้รับสัญญาณรบกวนชั่วขณะ ทำให้ระบบประเมินว่ามีคน<br>
+          ซึ่งผลทดสอบยืนยันว่าระบบมีความแม่นยำเพียงพอในการตรวจจับและลดการเปิดเครื่องใช้ไฟฟ้าทิ้งไว้ได้อย่างมีประสิทธิภาพครับ"
+        </div>
+      </div>
+
+      <!-- Q9 -->
+      <div class="qa-card">
+        <div class="qa-question"><span class="q-num">Q9</span> แสงแดดภายนอกส่งผลกระทบต่อการวัดสถานะไฟของเซนเซอร์ LDR หรือไม่?</div>
+        <div class="qa-answer">
+          <div class="answer-highlight">
+            <strong>แนวทางการตอบ:</strong> ยอมรับข้อจำกัดตามบทที่ 5 และอธิบายการปรับจูน Threshold
+          </div>
+          "ส่งผลกระทบได้ครับ ในห้องเรียนที่มีหน้าต่างรับแสงธรรมชาติ หากเป็นช่วงเวลากลางวันที่มีแดดจัด ค่าความสว่างที่วัดได้อาจสูงขึ้น ทางกลุ่มจึงแก้ไขโดยการปรับตัวต้านทานปรับค่าได้ (Trimmer Potentiometer) บนโมดูล LDR เพื่อกำหนดค่าเกณฑ์ความสว่างให้สอดคล้องกับความสว่างของหลอดไฟฟลูออเรสเซนต์ในห้อง และระบุข้อจำกัดนี้ไว้ในบทที่ 5 เรียบร้อยแล้วครับ"
+        </div>
+      </div>
+
+      <!-- Q10 -->
+      <div class="qa-card">
+        <div class="qa-question"><span class="q-num">Q10</span> ถ้าสัญญาณ Wi-Fi หลุด หรือไฟดับ ระบบจะมีพฤติกรรมการทำงานอย่างไร?</div>
+        <div class="qa-answer">
+          <div class="answer-highlight">
+            <strong>แนวทางการตอบ:</strong> อธิบายฟังก์ชัน Reconnect ของ ESP32 และหน้า Device Status
+          </div>
+          "ในโค้ดของบอร์ด ESP32 มีคำสั่งตรวจสอบสถานะ <code>WiFi.status() != WL_CONNECTED</code> หากสัญญาณหลุด บอร์ดจะพยายาม Reconnect เชื่อมต่อใหม่อัตโนมัติโดยไม่ต้องรีเซ็ตเครื่องครับ<br>
+          ส่วนฝั่งหน้าเว็บ เรามีหน้า <strong>Device Health Check</strong> ซึ่งตรวจสอบว่าบอร์ดมีการส่งข้อมูลเข้ามาล่าสุดเมื่อใด หากไม่มีข้อมูลส่งเข้ามาเกิน 1 นาที ระบบจะขึ้นสถานะว่า 'Offline' เพื่อแจ้งเตือนให้ผู้ดูแลทราบทันทีครับ"
+        </div>
+      </div>
+
+      <!-- Q11 -->
+      <div class="qa-card">
+        <div class="qa-question"><span class="q-num">Q11</span> ทำไมระบบไม่สั่งปิดแอร์อัตโนมัติไปเลย เมื่อตรวจพบสถานะ Warning?</div>
+        <div class="qa-answer">
+          <div class="answer-highlight">
+            <strong>แนวทางการตอบ:</strong> อธิบายเรื่อง Safety และสิทธิ์การตัดสินใจของผู้ใช้งาน
+          </div>
+          "มี 2 เหตุผลหลักครับ:<br>
+          1. <strong>ความปลอดภัยและผลกระทบต่อการเรียนการสอน:</strong> ในกรณีที่มีนิสิตกำลังสอบ หรือทำแล็บอยู่นิ่ง ๆ การที่ระบบตัดแอร์อัตโนมัติอาจสร้างความเสียหายหรือรบกวนการเรียนได้ การแจ้งเตือนให้เจ้าหน้าที่รับทราบก่อนถือเป็นแนวทางที่ปลอดภัยที่สุด<br>
+          2. <strong>การควบคุมแอร์:</strong> การสั่งปิดแอร์ต้องติดตั้งชุดส่งสัญญาณอินฟราเรด (IR Transmitter) เพิ่มเติม ซึ่งเราได้วางแผนไว้เป็นแนวทางการพัฒนาต่อยอดในเฟสถัดไปครับ"
+        </div>
+      </div>
+
+      <!-- Q12 -->
+      <div class="qa-card">
+        <div class="qa-question"><span class="q-num">Q12</span> ถ้าอนาคตจะนำไปติดตั้งจริงทั่วทั้งมหาวิทยาลัย 100 ห้อง ระบบจะรองรับไหวไหม?</div>
+        <div class="qa-answer">
+          <div class="answer-highlight">
+            <strong>แนวทางการตอบ:</strong> อธิบายเรื่อง Scalability, Database Indexing และการปรับความถี่
+          </div>
+          "สถาปัตยกรรมที่เราออกแบบไว้รองรับการขยายตัว (Scalability) ได้เป็นอย่างดีครับ:<br>
+          1. ในฐานข้อมูล <code>sensor_logs</code> ได้มีการสร้าง Index บนคอลัมน์ <code>room_id</code> และ <code>created_at</code> ทำให้คิวรี่ได้อย่างรวดเร็วแม้ข้อมูลจะมีหลายแสนแถว<br>
+          2. หากมี 100 ห้อง เราสามารถปรับลดความถี่ในการส่งข้อมูลของ ESP32 จากทุก 5 วินาที เป็นทุก 30 วินาที หรือ 1 นาที ซึ่งจะลดภาระของเซิร์ฟเวอร์ลงได้ถึง 6-12 เท่า โดยที่ยังคงประสิทธิภาพการตรวจจับสถานะได้อย่างสมบูรณ์ครับ"
+        </div>
+      </div>
+
+    </div>
+
+    <!-- ==========================================
+         TAB 4: TECHNICAL CHEATSHEET & ARCHITECTURE
+         ========================================== -->
+    <div id="tab-tech" class="tab-content">
+      
+      <div class="card" style="border-left: 5px solid #f59e0b;">
+        <div class="card-title" style="margin-bottom: 8px;">⚙️ แผนผังทางเทคนิคและ API Reference</div>
+        <p style="color: var(--text-muted);">ข้อมูลจำเพาะเชิงลึกของฮาร์ดแวร์ พินเชื่อมต่อ ตารางฐานข้อมูล และ API Endpoint</p>
+      </div>
+
+      <div class="card">
+        <div class="card-title">1. ข้อมูลจำเพาะของเซนเซอร์และพินเชื่อมต่อ (Hardware Pinout)</div>
+        <table style="width:100%; border-collapse: collapse; margin-top: 14px; font-size: 15.5px;">
+          <thead>
+            <tr style="background: #f1f5f9; text-align: left;">
+              <th style="padding: 10px; border: 1px solid var(--border);">อุปกรณ์ / เซนเซอร์</th>
+              <th style="padding: 10px; border: 1px solid var(--border);">โมเดล / รุ่น</th>
+              <th style="padding: 10px; border: 1px solid var(--border);">ขาเชื่อมต่อ ESP32</th>
+              <th style="padding: 10px; border: 1px solid var(--border);">บทบาทหน้าที่</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td style="padding: 10px; border: 1px solid var(--border);"><strong>ไมโครคอนโทรลเลอร์</strong></td>
+              <td style="padding: 10px; border: 1px solid var(--border);">ESP32 DevKit V1 (30 pins)</td>
+              <td style="padding: 10px; border: 1px solid var(--border);">-</td>
+              <td style="padding: 10px; border: 1px solid var(--border);">ประมวลผลและส่งข้อมูลผ่าน Wi-Fi 2.4 GHz</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid var(--border);"><strong>เซนเซอร์วัดลมแอร์</strong></td>
+              <td style="padding: 10px; border: 1px solid var(--border);">DS18B20 (Waterproof Probe)</td>
+              <td style="padding: 10px; border: 1px solid var(--border);">GPIO 4 (1-Wire Bus)</td>
+              <td style="padding: 10px; border: 1px solid var(--border);">ตรวจวัดอุณหภูมิลมเย็นหน้ากากแอร์ (≤ 26°C)</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid var(--border);"><strong>เซนเซอร์ตรวจจับคน</strong></td>
+              <td style="padding: 10px; border: 1px solid var(--border);">HC-SR501 PIR Motion Sensor</td>
+              <td style="padding: 10px; border: 1px solid var(--border);">GPIO 13 (Digital In)</td>
+              <td style="padding: 10px; border: 1px solid var(--border);">ตรวจจับรังสีความร้อนจากการเคลื่อนไหว</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid var(--border);"><strong>เซนเซอร์วัดสภาพห้อง</strong></td>
+              <td style="padding: 10px; border: 1px solid var(--border);">DHT22 (AM2302)</td>
+              <td style="padding: 10px; border: 1px solid var(--border);">GPIO 14 (Digital In)</td>
+              <td style="padding: 10px; border: 1px solid var(--border);">วัดอุณหภูมิห้อง (°C) และความชื้นสัมพัทธ์ (%RH)</td>
+            </tr>
+            <tr>
+              <td style="padding: 10px; border: 1px solid var(--border);"><strong>เซนเซอร์วัดแสงสว่าง</strong></td>
+              <td style="padding: 10px; border: 1px solid var(--border);">LDR Sensor Module</td>
+              <td style="padding: 10px; border: 1px solid var(--border);">GPIO 27 (Digital In)</td>
+              <td style="padding: 10px; border: 1px solid var(--border);">ตรวจสอบสถานะการเปิด-ปิดหลอดไฟในห้อง</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card">
+        <div class="card-title">2. API Endpoints และโฟลว์ข้อมูล (Data Flow)</div>
+        <pre style="background: #0f172a; color: #e2e8f0; padding: 14px 18px; border-radius: 10px; font-family: 'Fira Code', monospace; font-size: 14px; line-height: 1.6; margin-top: 10px;">1. บอร์ด ESP32 -&gt; Web Server:
+   Endpoint: POST http://[Server-IP]/smart_classroom/insert_data.php
+   Payload (x-www-form-urlencoded):
+   room_id=1&amp;temp=28.5&amp;humidity=60.2&amp;light=1&amp;motion=1&amp;ac_temp=22.4
+
+2. Web Frontend -&gt; API:
+   - GET get_data.php      : ดึงสถานะ Real-time ล่าสุดมาอัปเดตหน้า Dashboard
+   - GET energy_api.php    : สรุปผลชั่วโมงการใช้งานแอร์สะสม (ชั่วโมง : นาที)
+   - POST upload_schedule.php : อัปโหลดไฟล์ Excel ตารางสอน (.xlsx)
+   - POST send_line_alert.php : สั่งส่งข้อความแจ้งเตือนเข้าแอปพลิเคชัน LINE
+        </pre>
+      </div>
+
+    </div>
+
+  </div>
+
+  <script>
+    // Tab Switching
+    function switchTab(tabId) {
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-btn').forEach(el => el.classList.remove('active'));
+      document.getElementById(tabId).classList.add('active');
+      event.target.classList.add('active');
+      window.scrollTo({ top: 140, behavior: 'smooth' });
+    }
+
+    // Font Size Adjustment
+    let currentFontSize = 17.5;
+    function changeFontSize(delta) {
+      currentFontSize = Math.min(26, Math.max(14, currentFontSize + delta));
+      document.body.style.fontSize = currentFontSize + 'px';
+      document.querySelectorAll('.speech-text').forEach(el => {
+        el.style.fontSize = (currentFontSize + 0.5) + 'px';
+      });
+      document.querySelectorAll('.qa-answer').forEach(el => {
+        el.style.fontSize = (currentFontSize) + 'px';
+      });
+    }
+
+    // Download HTML File
+    function downloadHTML() {
+      const htmlContent = document.documentElement.outerHTML;
+      const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'thesis_presentation_defense_script.html';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+  </script>
+<!-- Code injected by live-server -->
+<script>
+	// <![CDATA[  <-- For SVG support
+	if ('WebSocket' in window) {
+		(function () {
+			function refreshCSS() {
+				var sheets = [].slice.call(document.getElementsByTagName("link"));
+				var head = document.getElementsByTagName("head")[0];
+				for (var i = 0; i < sheets.length; ++i) {
+					var elem = sheets[i];
+					var parent = elem.parentElement || head;
+					parent.removeChild(elem);
+					var rel = elem.rel;
+					if (elem.href && typeof rel != "string" || rel.length == 0 || rel.toLowerCase() == "stylesheet") {
+						var url = elem.href.replace(/(&|\?)_cacheOverride=\d+/, '');
+						elem.href = url + (url.indexOf('?') >= 0 ? '&' : '?') + '_cacheOverride=' + (new Date().valueOf());
+					}
+					parent.appendChild(elem);
+				}
+			}
+			var protocol = window.location.protocol === 'http:' ? 'ws://' : 'wss://';
+			var address = protocol + window.location.host + window.location.pathname + '/ws';
+			var socket = new WebSocket(address);
+			socket.onmessage = function (msg) {
+				if (msg.data == 'reload') window.location.reload();
+				else if (msg.data == 'refreshcss') refreshCSS();
+			};
+			if (sessionStorage && !sessionStorage.getItem('IsThisFirstTime_Log_From_LiveServer')) {
+				console.log('Live reload enabled.');
+				sessionStorage.setItem('IsThisFirstTime_Log_From_LiveServer', true);
+			}
+		})();
+	}
+	else {
+		console.error('Upgrade your browser. This Browser is NOT supported WebSocket for Live-Reloading.');
+	}
+	// ]]>
+</script>
+
+
+</body></html>
